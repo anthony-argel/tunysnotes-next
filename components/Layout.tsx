@@ -4,12 +4,14 @@ import Nav from "./Nav";
 
 type Props = {
     children: ReactNode;
+    loggedIn: boolean;
+    api: string;
 };
 
-const Layout = ({ children }: Props) => {
+const Layout = ({ children, loggedIn }: Props) => {
     return (
         <div>
-            <Nav></Nav>
+            <Nav loggedIn={loggedIn}></Nav>
             <main style={{ minHeight: "95vh" }}>{children}</main>
             <Footer></Footer>
         </div>
