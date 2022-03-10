@@ -1,4 +1,5 @@
 import { GetStaticProps, GetStaticPaths } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Key, useCallback, useEffect, useState } from "react";
 
@@ -101,7 +102,14 @@ const Topic = ({ initialSections, loggedIn, api }: Sections) => {
                                       __html: notes.text.toString(),
                                   }}
                               ></div>
-                              <div className="flex gap-4">
+                              <div className="flex gap-4 items-center">
+                                  {loggedIn ? (
+                                      <Link href={"/edit/" + notes._id}>
+                                          <a className="bg-lime-900 text-white p-3 rounded">
+                                              Edit
+                                          </a>
+                                      </Link>
+                                  ) : null}
                                   {loggedIn ? (
                                       <button
                                           className={
@@ -128,15 +136,15 @@ const Topic = ({ initialSections, loggedIn, api }: Sections) => {
                                           }}
                                       >
                                           {notes.isVisible ? (
-                                              <p>Hide section</p>
+                                              <p>Hide</p>
                                           ) : (
-                                              <p>Show section</p>
+                                              <p>Show</p>
                                           )}
                                       </button>
                                   ) : null}
 
                                   {notes && notes.isVisible === true
-                                      ? null
+                                      ? "users"
                                       : "admin only"}
                                   {loggedIn ? (
                                       <button

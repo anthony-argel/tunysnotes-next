@@ -3,6 +3,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
+import { getSession } from "next-auth/react";
 
 type Props = {
     api: string;
@@ -11,6 +12,7 @@ type Props = {
 
 const PostForm = ({ api, loggedIn }: Props) => {
     const router = useRouter();
+    const { id } = router.query;
     const [title, setTitle] = useState("");
     const [tag, setTag] = useState("");
     const [post, setPost] = useState("");
@@ -19,7 +21,33 @@ const PostForm = ({ api, loggedIn }: Props) => {
     const [posted, setPosted] = useState(false);
     const [visible, setVisible] = useState(false);
 
+    useEffect(() => {
+        fetch(api + "/admin/notes/id/" + id, {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+            mode: "cors",
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+            })
+            .then((res) => {
+                if (res) {
+                    setTitle(res.title);
+                    setTag(res.tag);
+                    setPost(res.text);
+                    setTable(res.tableOfContents);
+                    setVisible(res.isVisible);
+                }
+            });
+    }, [api, id]);
+
     const submitPost = (e: React.MouseEvent<HTMLFormElement>) => {
+        console.log("submitted?");
         if (title === "" || post === "" || table === "") {
             e.preventDefault();
             setError(true);
@@ -27,8 +55,8 @@ const PostForm = ({ api, loggedIn }: Props) => {
         }
         if (api !== "") {
             e.preventDefault();
-            fetch(api + "/admin/notes", {
-                method: "POST",
+            fetch(api + "/admin/notes/" + id, {
+                method: "PUT",
                 body: JSON.stringify({
                     title,
                     text: post,
@@ -80,6 +108,7 @@ const PostForm = ({ api, loggedIn }: Props) => {
                                 id="title"
                                 name="title"
                                 required
+                                value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                             ></input>
                         </label>
@@ -90,6 +119,7 @@ const PostForm = ({ api, loggedIn }: Props) => {
                                 type="text"
                                 id="tag"
                                 name="tag"
+                                value={tag}
                                 onChange={(e) => setTag(e.target.value)}
                             ></input>
                         </label>
@@ -168,6 +198,21 @@ const PostForm = ({ api, loggedIn }: Props) => {
             </div>
         </div>
     );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/",
+            },
+        };
+    }
+    return {
+        props: {},
+    };
 };
 
 export default PostForm;
