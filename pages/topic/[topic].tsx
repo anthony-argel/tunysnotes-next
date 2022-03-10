@@ -37,7 +37,9 @@ const Topic = ({ initialSections, loggedIn, api }: Sections) => {
                 }
             })
             .then((res) => {
-                setSections(res);
+                if (res) {
+                    setSections(res);
+                }
             });
     }, [api, topic]);
 
