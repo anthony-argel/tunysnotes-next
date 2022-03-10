@@ -24,12 +24,10 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
                 localStorage.removeItem("token");
                 setLoggedIn(false);
             } else {
-                if (session) {
-                    setLoggedIn(true);
-                }
+                setLoggedIn(true);
             }
         });
-    }, [api, session]);
+    }, [api]);
 
     useEffect(() => {
         verifyToken();

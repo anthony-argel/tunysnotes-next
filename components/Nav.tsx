@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
+import styles from "../styles/nav.module.css";
 
 type Props = {
     loggedIn: boolean;
@@ -11,7 +12,7 @@ const Nav = ({ loggedIn }: Props) => {
 
     const dropDownMenu = () => {
         return (
-            <div className="cursor-pointer relative">
+            <div className="cursor-pointer relative ">
                 <ul className="absolute bg-stone-800">
                     <li
                         className="flex p-4 select-none"
@@ -23,26 +24,42 @@ const Nav = ({ loggedIn }: Props) => {
                         <IoMdArrowDropup className="self-center"></IoMdArrowDropup>
                     </li>
                     <li className="p-4">
-                        <Link href="discrete-math">
-                            <a>Discrete Math</a>
+                        <Link href="/topic/discrete-math">
+                            <a
+                                className={styles.navlink}
+                                onClick={() => setShowDropDown(false)}
+                            >
+                                Discrete Math
+                            </a>
                         </Link>
                     </li>
-                    <li className="p-4">Japanese</li>
+                    <li className="p-4">
+                        <Link href="/topic/japanese">
+                            <a
+                                className={styles.navlink}
+                                onClick={() => setShowDropDown(false)}
+                            >
+                                Japanese
+                            </a>
+                        </Link>
+                    </li>
                 </ul>
             </div>
         );
     };
 
     return (
-        <nav className="bg-stone-800 text-white flex justify-between">
+        <nav className="bg-stone-800 text-white flex justify-between my-nav">
             <ul className="flex relative">
                 <li className="m-4">
-                    <Link href="/">Tuny&#39;s Notes</Link>
+                    <Link href="/">
+                        <a className={styles.navlink}>Tuny&#39;s Notes</a>
+                    </Link>
                 </li>
                 {loggedIn === true ? (
                     <li className="m-4">
                         <Link href="/create">
-                            <a>Create</a>
+                            <a className={styles.navlink}>Create</a>
                         </Link>
                     </li>
                 ) : null}
@@ -60,9 +77,9 @@ const Nav = ({ loggedIn }: Props) => {
                     dropDownMenu()
                 )}
             </ul>
-            <p className="m-4 text-stone-800">
+            <p className="m-4">
                 <Link href="/login">
-                    <a>Log in</a>
+                    <a className="text-stone-800">Log in</a>
                 </Link>
             </p>
         </nav>

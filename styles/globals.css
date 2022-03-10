@@ -15,4 +15,8 @@
         @apply text-xl;
         @apply font-bold;
     }
+    a {
+        @apply underline;
+        @apply text-blue-700;
+    }
 }
