@@ -100,7 +100,6 @@ const Login = ({ api, loggedIn, setLoggedIn }: Props) => {
                                     onClick={() => {
                                         localStorage.removeItem("token");
                                         signOut();
-                                        console.log("get logged out nerd");
                                     }}
                                 >
                                     Sign out

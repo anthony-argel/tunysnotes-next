@@ -8,6 +8,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     let api = "http://localhost:3006";
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
     const verifyToken = useCallback(() => {
+        console.log("ran this");
         if (localStorage.getItem("token") === null) {
             return;
         }
@@ -20,18 +21,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
             },
             mode: "cors",
         }).then((res) => {
-            if (res.status === 403 || res.status === 401) {
+            if (res.ok) {
+                setLoggedIn(true);
+            } else {
                 localStorage.removeItem("token");
                 setLoggedIn(false);
-            } else {
-                setLoggedIn(true);
             }
         });
     }, [api]);
 
     useEffect(() => {
         verifyToken();
-    }, []);
+    }, [verifyToken]);
 
     return (
         <SessionProvider session={session}>

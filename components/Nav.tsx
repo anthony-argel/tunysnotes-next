@@ -12,10 +12,10 @@ const Nav = ({ loggedIn }: Props) => {
 
     const dropDownMenu = () => {
         return (
-            <div className="cursor-pointer relative ">
-                <ul className="absolute bg-stone-800">
+            <div className=" relative ">
+                <ul className="absolute bg-stone-800 ">
                     <li
-                        className="flex p-4 select-none"
+                        className="flex p-4 select-none cursor-pointer"
                         onClick={() =>
                             setShowDropDown((previousState) => !previousState)
                         }

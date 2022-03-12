@@ -40,12 +40,14 @@ const NotesComponent = ({ notes, title, loggedIn, api }: NotesProps) => {
                     __html: notes ? notes.text.toString() : "",
                 }}
             ></div>
-            <div
-                className="p-4 md:basis-1/3 select-none"
-                dangerouslySetInnerHTML={{
-                    __html: notes ? notes.tableOfContents.toString() : "",
-                }}
-            ></div>
+            <div className="p-4 md:basis-1/3 select-none">
+                <h2>Content</h2>
+                <div
+                    dangerouslySetInnerHTML={{
+                        __html: notes ? notes.tableOfContents.toString() : "",
+                    }}
+                ></div>
+            </div>
         </div>
     );
 };
