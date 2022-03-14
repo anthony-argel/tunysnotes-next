@@ -1,4 +1,5 @@
 import { GetStaticProps, GetStaticPaths } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Key, useCallback, useEffect, useState } from "react";
@@ -53,6 +54,9 @@ const Topic = ({ sections, loggedIn, api }: Sections) => {
 
     return (
         <div className="flex justify-center flex-col items-center gap-5">
+            <Head>
+                <title>{topic} - Tuny&#39;s Notes</title>
+            </Head>
             {!loggedIn ? (
                 <TopicList
                     sections={sections}
@@ -98,6 +102,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return {
         props: {
             sections,
+            revalidate: 100,
         },
     };
 };

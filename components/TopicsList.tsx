@@ -1,4 +1,5 @@
 import { GetStaticProps, GetStaticPaths } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Key, useCallback, useEffect, useState } from "react";
@@ -65,16 +66,20 @@ const TopicList = ({ sections, loggedIn, api, getAdminView }: Props) => {
                               key={notes ? notes._id : 1}
                               className={
                                   index === 0
-                                      ? "w-3/5 p-4 m-3"
-                                      : "w-3/5 p-5 m-3 rounded shadow-xl"
+                                      ? "w-11/12 md:w-3/5 p-4 m-3 "
+                                      : "w-11/12 md:w-3/5 p-5 m-3 rounded border border-solid"
                               }
                           >
                               <h2>{notes.title}</h2>
-                              <div
-                                  dangerouslySetInnerHTML={{
-                                      __html: notes.text.toString(),
-                                  }}
-                              ></div>
+                              {notes.text ? (
+                                  <div
+                                      dangerouslySetInnerHTML={{
+                                          __html: notes.text.toString(),
+                                      }}
+                                  ></div>
+                              ) : (
+                                  <p>Could not find text</p>
+                              )}
                               <div className="flex gap-4 items-center flex-wrap">
                                   {loggedIn ? (
                                       <Link href={"/edit/" + notes._id}>

@@ -29,7 +29,7 @@ type NotesProps = {
 
 const NotesComponent = ({ notes, title, loggedIn, api }: NotesProps) => {
     return (
-        <div className="flex flex-col-reverse p-4 gap-4 md:h-screen md:flex-row">
+        <div className="flex flex-col-reverse p-4 gap-4 md:h-screen md:flex-row md:w-9/12">
             <Head>
                 <title>{notes ? notes.title : title} - Tuny&#39;s Notes</title>
             </Head>
@@ -40,6 +40,7 @@ const NotesComponent = ({ notes, title, loggedIn, api }: NotesProps) => {
                     __html: notes ? notes.text.toString() : "",
                 }}
             ></div>
+            <br className="bg-onyx-800"></br>
             <div className="p-4 md:basis-1/3 select-none">
                 <h2>Content</h2>
                 <div
@@ -121,9 +122,9 @@ const Post = ({ initialNotes, loggedIn, api }: Props) => {
     }
 
     return (
-        <>
+        <div className="flex justify-center flex-col md:items-center">
             {loggedIn && notes ? (
-                <div className="flex gap-4 items-center justify-center m-3">
+                <div className="flex gap-4 items-center justify-center m-3 ">
                     <Link href={"/edit/" + notes._id}>
                         <a className="bg-lime-900 text-white p-3 rounded">
                             Edit
@@ -181,7 +182,7 @@ const Post = ({ initialNotes, loggedIn, api }: Props) => {
             ) : (
                 <ErrorPage statusCode={404}></ErrorPage>
             )}
-        </>
+        </div>
     );
 };
 
@@ -213,6 +214,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         props: {
             initialNotes: notes,
         },
+        revalidate: 100,
     };
 };
 

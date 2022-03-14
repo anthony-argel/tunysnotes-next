@@ -74,6 +74,10 @@ const PostForm = ({ api, loggedIn }: Props) => {
                     <form onSubmit={submitPost}>
                         <label htmlFor="title ">
                             Title:
+                            <p>
+                                Note, this is only for URL string. Please be all
+                                lower case.
+                            </p>
                             <input
                                 className="w-full border border-stone-300"
                                 type="text"

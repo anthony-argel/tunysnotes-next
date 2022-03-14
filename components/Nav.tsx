@@ -43,46 +43,62 @@ const Nav = ({ loggedIn }: Props) => {
                             </a>
                         </Link>
                     </li>
+                    {loggedIn ? (
+                        <li className="p-4">
+                            <Link href="/admin">
+                                <a
+                                    className={styles.navlink}
+                                    onClick={() => setShowDropDown(false)}
+                                >
+                                    Admin
+                                </a>
+                            </Link>
+                        </li>
+                    ) : null}
                 </ul>
             </div>
         );
     };
 
     return (
-        <nav className="bg-stone-800 text-white flex justify-between my-nav">
-            <ul className="flex relative">
-                <li className="m-4">
-                    <Link href="/">
-                        <a className={styles.navlink}>Tuny&#39;s Notes</a>
-                    </Link>
-                </li>
-                {loggedIn === true ? (
+        <div className="bg-stone-800 flex justify-center">
+            <nav className=" text-white flex justify-between my-nav w-full md:w-9/12">
+                <ul className="flex relative">
                     <li className="m-4">
-                        <Link href="/create">
-                            <a className={styles.navlink}>Create</a>
+                        <Link href="/">
+                            <a className={styles.navlink}>Tuny&#39;s Notes</a>
                         </Link>
                     </li>
-                ) : null}
-                {!showDropDown ? (
-                    <li
-                        className="flex cursor-pointer m-4"
-                        onClick={() =>
-                            setShowDropDown((previousState) => !previousState)
-                        }
-                    >
-                        Topics
-                        <IoMdArrowDropdown className="self-center"></IoMdArrowDropdown>
-                    </li>
-                ) : (
-                    dropDownMenu()
-                )}
-            </ul>
-            <p className="m-4">
-                <Link href="/login">
-                    <a className="text-stone-800">Log in</a>
-                </Link>
-            </p>
-        </nav>
+                    {loggedIn === true ? (
+                        <li className="m-4">
+                            <Link href="/create">
+                                <a className={styles.navlink}>Create</a>
+                            </Link>
+                        </li>
+                    ) : null}
+                    {!showDropDown ? (
+                        <li
+                            className="flex cursor-pointer m-4"
+                            onClick={() =>
+                                setShowDropDown(
+                                    (previousState) => !previousState
+                                )
+                            }
+                        >
+                            Topics
+                            <IoMdArrowDropdown className="self-center"></IoMdArrowDropdown>
+                        </li>
+                    ) : (
+                        dropDownMenu()
+                    )}
+                </ul>
+                <p className="m-4">
+                    <Link href="/login">
+                        <a className="text-stone-800">Log in</a>
+                    </Link>
+                </p>
+            </nav>
+        </div>
     );
 };
 export default Nav;

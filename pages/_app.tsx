@@ -8,7 +8,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     let api = "http://localhost:3006";
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
     const verifyToken = useCallback(() => {
-        console.log("ran this");
         if (localStorage.getItem("token") === null) {
             return;
         }
